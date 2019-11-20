@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tkksys.backendninja.model.Persona;
 import com.tkksys.backendninja.util.Util;
 
 @Controller
@@ -42,7 +43,7 @@ public class MyController extends Util{
 	 */
 	@GetMapping("/primeraForma")
 	public String pagina1(Model modelo) {
-		modelo.addAttribute("name", "Juan");
+		modelo.addAttribute("persona", new Persona("Juan", 34));
 		return PAGE_EXAMPLE;
 	}
 	
@@ -57,7 +58,7 @@ public class MyController extends Util{
 	@GetMapping("/segundaForma")
 	public ModelAndView pagina2() {
 		ModelAndView mav = new ModelAndView(PAGE_EXAMPLE); //En el constructor del MAV pasamos la constante con el nombre de la vista
-		mav.addObject("name", "Pedro");//Se agrega el atributo y el valor del atributo
+		mav.addObject("persona", new Persona("Luis", 23));//Se agrega el atributo y el valor del atributo
 		return mav;
 	}
 }
