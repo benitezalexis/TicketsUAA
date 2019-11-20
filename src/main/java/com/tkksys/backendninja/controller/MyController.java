@@ -13,6 +13,7 @@
 package com.tkksys.backendninja.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +41,8 @@ public class MyController extends Util{
 	 * que realizar en una constante y no en todos los metodos donde fue invocado.
 	 */
 	@GetMapping("/primeraForma")
-	public String pagina1() {
+	public String pagina1(Model modelo) {
+		modelo.addAttribute("name", "Juan");
 		return PAGE_EXAMPLE;
 	}
 	
@@ -54,6 +56,8 @@ public class MyController extends Util{
 	 */
 	@GetMapping("/segundaForma")
 	public ModelAndView pagina2() {
-		return new ModelAndView(PAGE_EXAMPLE) ;
+		ModelAndView mav = new ModelAndView(PAGE_EXAMPLE); //En el constructor del MAV pasamos la constante con el nombre de la vista
+		mav.addObject("name", "Pedro");//Se agrega el atributo y el valor del atributo
+		return mav;
 	}
 }
