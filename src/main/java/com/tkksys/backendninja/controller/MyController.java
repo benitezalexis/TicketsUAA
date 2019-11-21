@@ -12,6 +12,9 @@
  
 package com.tkksys.backendninja.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +46,7 @@ public class MyController extends Util{
 	 */
 	@GetMapping("/primeraForma")
 	public String pagina1(Model modelo) {
-		modelo.addAttribute("persona", new Persona("Juan", 34));
+		modelo.addAttribute("gente", getGente());
 		return PAGE_EXAMPLE;
 	}
 	
@@ -58,7 +61,17 @@ public class MyController extends Util{
 	@GetMapping("/segundaForma")
 	public ModelAndView pagina2() {
 		ModelAndView mav = new ModelAndView(PAGE_EXAMPLE); //En el constructor del MAV pasamos la constante con el nombre de la vista
-		mav.addObject("persona", new Persona("Luis", 23));//Se agrega el atributo y el valor del atributo
+		mav.addObject("gente", getGente());//Se agrega el atributo y el valor del atributo
 		return mav;
+	}
+	
+	
+	private List<Persona> getGente(){
+		List<Persona> gente = new ArrayList<>();
+		gente.add(new Persona("Luis", 23));
+		gente.add(new Persona("Carlos", 34));
+		gente.add(new Persona("Ana", 45));
+		gente.add(new Persona("Luz", 12));
+		return gente;
 	}
 }
