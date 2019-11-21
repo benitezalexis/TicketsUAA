@@ -28,4 +28,9 @@ public class Persona {
 
 	public Persona() {}
 
+	@Override
+	public String toString() {
+		return "Persona [name=" + name + ", age=" + age + "]";
+	}
+
 }

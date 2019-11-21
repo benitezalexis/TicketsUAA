@@ -1,5 +1,7 @@
 package com.tkksys.backendninja.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import com.tkksys.backendninja.model.Persona;
 @Controller
 @RequestMapping("/demos3")
 public class My3Controller {
+	private static final Log LOGGER = LogFactory.getLog(My3Controller.class);
 	
 	/**
 	 * Constante en la que guardamos la vista, para modificar posteriormente desde aqui si cambia el nombre
@@ -43,14 +46,15 @@ public class My3Controller {
 	@GetMapping("/showForm")
 	public String showForm(Model modelo) {
 		modelo.addAttribute("persona", new Persona());
-		int i = 6/0;
 		return FORM_VIEW;
 	}
 	
 	@PostMapping("/addperson")
 	public ModelAndView addPerson(@ModelAttribute("persona") Persona p) {
+		LOGGER.info("METHOD: 'addperson' -- PARAMS: '"+p+"'");
 		ModelAndView mav = new ModelAndView(RESULT_VIEW);
 		mav.addObject("persona", p);
+		LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+p+"'");
 		return mav;
 	}
 }
