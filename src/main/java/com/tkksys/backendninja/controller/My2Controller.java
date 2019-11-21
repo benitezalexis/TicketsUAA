@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tkksys.backendninja.util.Util;
+import com.tkksys.backendninja.util.MyUtil;
 
 @Controller
 @RequestMapping("/demos2")
-public class My2Controller extends Util{
-
+public class My2Controller extends MyUtil{
+	public static final String PAGE_EXAMPLE2 = "paginaDemo2";
 	/**
 	 * Primera forma de realizar un request de tipo GET
 	 * "localhost:8080/demos2/request1?nm=JON"

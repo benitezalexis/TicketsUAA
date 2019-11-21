@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tkksys.backendninja.model.Persona;
-import com.tkksys.backendninja.util.Util;
+import com.tkksys.backendninja.util.MyUtil;
 
 @Controller
 @RequestMapping("/demos")
-public class MyController extends Util{
-	
+public class MyController extends MyUtil{
+	public static final String PAGE_EXAMPLE = "paginaDemo";
 	/**
 	 * Metodo de tipo String para obtener una vista, es la manera mas sencilla, pero arcaica
 	 * @return index, que es la pagina de inicio en este caso
