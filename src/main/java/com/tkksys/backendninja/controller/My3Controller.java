@@ -43,6 +43,7 @@ public class My3Controller {
 	@GetMapping("/showForm")
 	public String showForm(Model modelo) {
 		modelo.addAttribute("persona", new Persona());
+		int i = 6/0;
 		return FORM_VIEW;
 	}
 	
