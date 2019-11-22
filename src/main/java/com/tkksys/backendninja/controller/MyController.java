@@ -15,12 +15,15 @@ package com.tkksys.backendninja.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tkksys.backendninja.component.ExampleComponent;
 import com.tkksys.backendninja.model.Persona;
 import com.tkksys.backendninja.util.MyUtil;
 
@@ -28,6 +31,12 @@ import com.tkksys.backendninja.util.MyUtil;
 @RequestMapping("/demos")
 public class MyController extends MyUtil{
 	public static final String PAGE_EXAMPLE = "paginaDemo";
+	
+	@Autowired //Esto indica a Spring que vamos a inyectar un componente que se encuentra en su memoria
+	@Qualifier("exampleComponent") //Esto indica a Spring el nombre del bean que esta en su memoria
+	private ExampleComponent exampleComponent;
+	
+	
 	/**
 	 * Metodo de tipo String para obtener una vista, es la manera mas sencilla, pero arcaica
 	 * @return index, que es la pagina de inicio en este caso
@@ -46,6 +55,7 @@ public class MyController extends MyUtil{
 	 */
 	@GetMapping("/primeraForma")
 	public String pagina1(Model modelo) {
+		exampleComponent.sayHello();
 		modelo.addAttribute("gente", getGente());
 		return PAGE_EXAMPLE;
 	}
