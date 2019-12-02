@@ -12,9 +12,6 @@
  
 package com.tkksys.backendninja.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -24,13 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tkksys.backendninja.component.ExampleComponent;
-import com.tkksys.backendninja.model.Persona;
+import com.tkksys.backendninja.service.impl.ExampleServiceImpl;
 import com.tkksys.backendninja.util.MyUtil;
 
 @Controller
 @RequestMapping("/demos")
 public class MyController extends MyUtil{
 	public static final String PAGE_EXAMPLE = "paginaDemo";
+	
+	@Autowired
+	@Qualifier("exampleService")
+	private ExampleServiceImpl exampleService;
 	
 	@Autowired //Esto indica a Spring que vamos a inyectar un componente que se encuentra en su memoria
 	@Qualifier("exampleComponent") //Esto indica a Spring el nombre del bean que esta en su memoria
@@ -56,7 +57,7 @@ public class MyController extends MyUtil{
 	@GetMapping("/primeraForma")
 	public String pagina1(Model modelo) {
 		exampleComponent.sayHello();
-		modelo.addAttribute("gente", getGente());
+		modelo.addAttribute("gente", exampleService.getListPeople());
 		return PAGE_EXAMPLE;
 	}
 	
@@ -71,17 +72,10 @@ public class MyController extends MyUtil{
 	@GetMapping("/segundaForma")
 	public ModelAndView pagina2() {
 		ModelAndView mav = new ModelAndView(PAGE_EXAMPLE); //En el constructor del MAV pasamos la constante con el nombre de la vista
-		mav.addObject("gente", getGente());//Se agrega el atributo y el valor del atributo
+		mav.addObject("gente", exampleService.getListPeople());//Se agrega el atributo y el valor del atributo
 		return mav;
 	}
 	
 	
-	private List<Persona> getGente(){
-		List<Persona> gente = new ArrayList<>();
-		gente.add(new Persona("Luis", 23));
-		gente.add(new Persona("Carlos", 34));
-		gente.add(new Persona("Ana", 45));
-		gente.add(new Persona("Luz", 12));
-		return gente;
-	}
+
 }
