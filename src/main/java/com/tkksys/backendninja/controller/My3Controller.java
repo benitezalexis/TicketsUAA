@@ -1,9 +1,12 @@
 package com.tkksys.backendninja.controller;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,11 +53,17 @@ public class My3Controller {
 	}
 	
 	@PostMapping("/addperson")
-	public ModelAndView addPerson(@ModelAttribute("persona") Persona p) {
-		LOGGER.info("METHOD: 'addperson' -- PARAMS: '"+p+"'");
-		ModelAndView mav = new ModelAndView(RESULT_VIEW);
-		mav.addObject("persona", p);
-		LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+p+"'");
+	public ModelAndView addPerson(@Valid @ModelAttribute("persona") Persona p, BindingResult bindingResult) {
+		ModelAndView mav = new ModelAndView();
+		if(bindingResult.hasErrors()) {
+			mav.setViewName(FORM_VIEW);
+		}else {			
+			
+			LOGGER.info("METHOD: 'addperson' -- PARAMS: '"+p+"'");
+			mav.setViewName(RESULT_VIEW);
+			mav.addObject("persona", p);
+			LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+p+"'");
+		}
 		return mav;
 	}
 }
