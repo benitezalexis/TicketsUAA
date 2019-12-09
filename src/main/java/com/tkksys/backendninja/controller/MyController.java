@@ -22,11 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tkksys.backendninja.component.ExampleComponent;
 import com.tkksys.backendninja.service.impl.ExampleServiceImpl;
-import com.tkksys.backendninja.util.MyUtil;
 
 @Controller
 @RequestMapping("/demos")
-public class MyController extends MyUtil{
+public class MyController{
 	public static final String PAGE_EXAMPLE = "paginaDemo";
 	
 	@Autowired
