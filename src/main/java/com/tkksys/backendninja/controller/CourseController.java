@@ -1,5 +1,7 @@
 package com.tkksys.backendninja.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -17,20 +19,24 @@ import com.tkksys.backendninja.service.CourseService;
 public class CourseController {
 	private static final String COURSES_VIEW = "courses";
 	
+	private static final Log LOG = LogFactory.getLog(CourseController.class); 
+	
 	@Autowired
 	@Qualifier("courseServiceImpl")
 	private CourseService courseService;
 
 	@GetMapping("/listcourses")
 	public ModelAndView listAllCourses() {
-		ModelAndView mav = new ModelAndView();
+		LOG.info("Call: " + "listcourses()");
+		ModelAndView mav = new ModelAndView(COURSES_VIEW);
 		mav.addObject("courses", courseService.listAllCourses());
 		return mav;
 	}
 	
 	@PostMapping("/addcourse")
 	public String addCourse(@ModelAttribute("course") Course course) {
+		LOG.info("Call: " + "addcourse() " + " -- Param:" + course.toString());
 		courseService.addCouse(course);
-		return "redirect:/listCourses";
+		return "redirect:/course/listcourses";
 	}
 }

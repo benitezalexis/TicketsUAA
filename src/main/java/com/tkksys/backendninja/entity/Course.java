@@ -3,6 +3,7 @@ package com.tkksys.backendninja.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 public class Course {
 
 	@Id
-	@GeneratedValue //serializa el id
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //serializa el id
 	@Column(name="id")
 	private int id;
 	@Column(name="name")
@@ -73,6 +74,12 @@ public class Course {
 
 	public void setHours(int hours) {
 		this.hours = hours;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", hours="
+				+ hours + "]";
 	}
 
 }
