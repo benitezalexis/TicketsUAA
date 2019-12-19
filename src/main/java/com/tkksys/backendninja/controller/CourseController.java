@@ -1,3 +1,7 @@
+/**
+ * @TODO tratar que los controller nunca usen entities
+ */
+
 package com.tkksys.backendninja.controller;
 
 import org.apache.commons.logging.Log;
