@@ -1,37 +1,32 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-
-  <meta charset="UTF-8">
-
-  <title>Acceso</title>
-
-  <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
-
-    <link rel="stylesheet" href="../static/css/style.css" media="screen" type="text/css" />
-
-</head>
-
-<body>
-
-
-  <div class="login-card">
-    <h1>Acceso <img class="candado"  src="../static/imgs/candado.png"></h1><br>
-     
-  <form class="form-signin" action="#" th:action="@{/logincheck}" th:object="${userCredentials}" method="post">
-    <input type="text" id="inputUsername" class="form-control" name="user" placeholder="Username" th:fiel="*{username}"/>
-    <input type="password" id="inputUsername" class="form-control" name="pass" placeholder="Password" th:fiel="*{password}"/>
-    <div th:if="${error != null}" class="alert alert-danger" role="alert">Invalid Username or Password</div>
-    <input type="submit" name="login" class="login login-submit" value="Acceder">
-  </form>
-
-  <div class="login-help">
-    <a href="#">Forgot Password</a>
-  </div>
-</div>
-
-
-</body>
-
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Acceso</title>
+		<!-- Bootstrap core CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+		<link rel='stylesheet' href="#" th:href="@{/css/style.css}" media="screen" type="text/css" />
+		<link rel='stylesheet' href="#" th:href="@{/css/login.css}" media="screen" type="text/css" />
+	</head>
+	<body>
+		<div class="container">
+			<form class="form-signin" action="#" th:action="@{/logincheck}" th:object="${userCredentials}" method="post">
+				<h1>Acceso <img class="candado" src="../static/imgs/candado.png"></h1>
+				<br>
+				<label for="inputMail" class="sr-only">Username</label>
+				<input type="text" id="inputUsername" class="form-control" name="user" placeholder="Username" th:fiel="*{username}" /> 
+				<label for="inputPassword" class="sr-only">Password</label>
+				<input type="password" id="inputPassword" class="form-control" name="pass" placeholder="Password" th:fiel="*{password}" />
+				<div th:if="${error != null}" class="alert alert-danger" role="alert">Invalid Username or Password</div>
+				<button class="btn btn-ld btn-primary btn-blck" type="submit">
+					<span class="glyphicon glyphicon-log-in aria-hidden="true></span> Sign in
+				</button>
+			</form>
+	
+			<div class="login-help">
+				<a href="#">Forgot Password</a>
+			</div>
+		</div>
+	</body>
 </html>
