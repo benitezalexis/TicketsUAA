@@ -18,14 +18,16 @@ public class LoginController {
 	}
 	
 	@GetMapping("/login")
-	public String showLoginForm(Model model, @RequestParam(name="error", defaultValue="", required=false) String error) {
-		model.addAttribute("userCredentials", new UserCredential());
+	public String showLoginForm(Model model, @RequestParam(name="error", required=false) String error, @RequestParam(name="logout", required=false) String logout) {
+		model.addAttribute("userCredentials", new UserCredential()); //pasamos como parametros el userCredentials
+		model.addAttribute("error", error);
+		model.addAttribute("logout", logout);
 		return "login";
 	}
 	
 	@PostMapping("/logincheck")
 	public String loginCheck(@ModelAttribute(name="userCredentials") UserCredential userCredential) {
-		if("user".equals(userCredential.getUsername()) && "user".equals(userCredential.getPassword())) {
+		if(userCredential.getUsername().equals("user") && userCredential.getPassword().equals("user")) {
 			return "contacts";
 		}
 		return "redirect:/login?error";
