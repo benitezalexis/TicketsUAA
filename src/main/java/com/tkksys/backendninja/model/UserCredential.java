@@ -31,4 +31,11 @@ public class UserCredential {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return "UserCredential [username=" + username + ", password=" + password + "]";
+	}
+	
+	
+
 }
