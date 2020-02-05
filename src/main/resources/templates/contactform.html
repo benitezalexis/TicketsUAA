@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Contact Form</title>
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+	crossorigin="anonymous">
+
+</head>
+<body>
+	<div class="container">
+		<h2 class="text-center">Contac Form</h2>
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6 pb-5">
+
+
+				<!--Form with header-->
+
+				<form action="#" th:action="@{/contacts/addcontact}" th:object="${contactModel}" method="post">
+					<div class="card border-primary rounded-0">
+						<div class="card-header p-0">
+							<div class="bg-info text-white text-center py-2">
+								<h3>
+									<i class="fa fa-envelope"></i> Contactanos
+								</h3>
+								<p class="m-0">Con gusto te ayudaremos</p>
+							</div>
+						</div>
+						<div class="card-body p-3">
+
+							<!--Body-->
+							<div class="form-group">
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-user text-info"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="firstname"
+										name="firstname" placeholder="Nombre" required th:field="*{firstname}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-user text-info"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="lastname"
+										name="lastname" placeholder="Apellido" required th:field="*{lastname}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-envelope text-info"></i>
+										</div>
+									</div>
+									<input type="number" class="form-control" id="phone"
+										name="phone" placeholder="0971 456987" required th:field="*{telephone}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-user text-info"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="city" name="city"
+										placeholder="Ciudad" required th:field="*{city}">
+								</div>
+							</div>
+
+							<div class="text-center">
+								<input type="submit" value="Enviar"
+									class="btn btn-info btn-block rounded-0 py-2">
+							</div>
+
+						</div>
+
+					</div>
+				</form>
+				<!--Form with header-->
+				<a href="#" th:href="@{/contacts/cancel}">
+					<div class="text-center">
+						<input type="submit" value="Cancelar"
+							class="btn btn-info btn-block rounded-0 py-2">
+					</div>
+				</a>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

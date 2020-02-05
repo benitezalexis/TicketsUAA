@@ -8,21 +8,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="contact")
+@Table(name = "contact")
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	@Column(name="firstname")
+	@Column(name = "firstname")
 	private String firstname;
-	@Column(name="lastname")
+	@Column(name = "lastname")
 	private String lastname;
-	@Column(name="telephone")
+	@Column(name = "telephone")
 	private String telephone;
-	@Column(name="city")
+	@Column(name = "city")
 	private String city;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getFirstname() {
 		return firstname;
@@ -53,14 +61,6 @@ public class Contact {
 	}
 
 	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Contact(String firstname, String lastname, String telephone, String city) {
-		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.telephone = telephone;
 		this.city = city;
 	}
 
