@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tkksys.backendninja.component.ContactConverter;
+import com.tkksys.backendninja.entity.Contact;
 import com.tkksys.backendninja.model.ContactModel;
 import com.tkksys.backendninja.service.ContactService;
 import com.tkksys.backendninja.util.ViewConstants;
@@ -33,8 +35,12 @@ public class ContactController {
 	}
 	
 	@GetMapping("/contactsform")
-	private String redirectoContactForm(Model model) {
-		model.addAttribute("contactModel", new ContactModel());
+	private String redirectoContactForm(@RequestParam(name="id", required=false) int id, Model model) { //ES required=false PARA QUE EL FORMULARIO PUEDA SER USADO AL AGREGAR NUEVO CONTACTO
+		ContactModel contact = new ContactModel(); 
+		if(id != 0) {
+			contact = contactService.findContactByIdModel(id);
+		}
+		model.addAttribute("contactModel", contact);
 		return ViewConstants.CONTACT_FORM;
 	}
 	
