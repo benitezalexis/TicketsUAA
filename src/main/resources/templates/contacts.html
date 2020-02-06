@@ -43,11 +43,15 @@
 						<td th:text="${contact.telephone}"></td>
 						<td th:text="${contact.city}"></td>
 						<td>
-							<div class="btn-group" role="group" aria-label="Basic example">
-							  
-							  <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
-							  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-							</div>
+							<button type="button" class="btn btn-info">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+
+							<a href="#" th:href="@{/contacts/removecontact?id=__${contact.id}__}">
+								<button type="button" class="btn btn-danger">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</a>
 						</td>
 					</tr>
 				</tbody>

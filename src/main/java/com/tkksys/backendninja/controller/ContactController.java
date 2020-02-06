@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tkksys.backendninja.model.ContactModel;
@@ -54,5 +55,11 @@ public class ContactController {
 		ModelAndView mav = new ModelAndView(ViewConstants.CONTACTS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
 		mav.addObject("contacts", contactService.findAllContacts());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
 		return mav;
+	}
+	
+	@GetMapping("/removecontact")
+	public ModelAndView removeContact(@RequestParam(name="id", required=true) int id) {
+		contactService.removeContact(id);
+		return showContact();
 	}
 }
