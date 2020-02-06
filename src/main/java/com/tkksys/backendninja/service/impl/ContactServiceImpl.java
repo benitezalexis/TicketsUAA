@@ -1,5 +1,8 @@
 package com.tkksys.backendninja.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,16 @@ public class ContactServiceImpl implements ContactService{
 	public ContactModel addContact(ContactModel contactModel) {
 		Contact contact = contactRepository.save(contactConverter.convertContactModel2Contact(contactModel));
 		return contactConverter.convertContact2ContactModel(contact);
+	}
+
+	@Override
+	public List<ContactModel> findAllContacts() {
+		List<Contact> contacts = contactRepository.findAll();//nos devuelve un List de ContactEntity
+		List<ContactModel> contactModel = new ArrayList<ContactModel>();
+		for(Contact contact : contacts) {//POR CADA contact IN contacts
+			contactModel.add(contactConverter.convertContact2ContactModel(contact));//transformamos de contact a contactModel y lo agregamos a dicha lista
+		}
+		return contactModel;//UNA VEZ QUE HAYA RECORRIDO TODA LA LISTA DE CONTACTS Y LOS HAYA TRANSFORMADO A MODEL LO DEVOLVEMOS
 	}
 
 }

@@ -1,87 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>Contactos</title>
-		<!-- JQuery JavaScript -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
-		<link rel='stylesheet' href="#" th:href="@{/css/style.css}" media="screen" type="text/css" />
-	</head>
-	<body>
-		<div class="container">
-			<h2>Tabla de Contactos</h2><br><hr>
-			<div class="table-responsive">
-			  <table class="table">
-			    <thead>
-			      <tr>
-			        <th scope="col">#</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			        <th scope="col">Heading</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-			      <tr>
-			        <th scope="row">1</th>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			      </tr>
-			      <tr>
-			        <th scope="row">2</th>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			      </tr>
-			      <tr>
-			        <th scope="row">3</th>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			        <td>Cell</td>
-			      </tr>
-			    </tbody>
-			  </table>
-			</div>
-			
-			<div th:if="${result == 1}" class="alert alert-success" role="alert">Contacto agregado!</div>
-			<div th:if="${result == 0}" class="alert alert-danger" role="alert">Contacto NO agregado!</div>
-				
-			<a href="#" th:href="@{/contacts/contactsform}">
-				<button class="btn btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-user-plus" aria-hidden="true"></span> Agregar Contacto</button>
-			</a>
-			<a href="#" th:href="@{/login?logout}">
-			
-				<button class="btn btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log out</button>
-			</a>
+<head>
+<meta charset="UTF-8">
+<title>Contactos</title>
+<!-- JQuery JavaScript -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel='stylesheet'
+	href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+<link rel='stylesheet' href="#" th:href="@{/css/style.css}"
+	media="screen" type="text/css" />
+</head>
+<body>
+	<div class="container">
+		<h2>Tabla de Contactos</h2>
+		<br>
+		<hr>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Lastname</th>
+						<th scope="col">Telephone</th>
+						<th scope="col">City</th>
+						<th scope="col">Management</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="contact : ${contacts}">
+						<td th:text="${contact.firstname}"></td>
+						<td th:text="${contact.lastname}"></td>
+						<td th:text="${contact.telephone}"></td>
+						<td th:text="${contact.city}"></td>
+						<td>
+							<div class="btn-group" role="group" aria-label="Basic example">
+							  
+							  <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
+							  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-	</body>
+
+		<div th:if="${result == 1}" class="alert alert-success" role="alert">Contacto
+			agregado!</div>
+		<div th:if="${result == 0}" class="alert alert-danger" role="alert">Contacto
+			NO agregado!</div>
+
+		<a href="#" th:href="@{/contacts/contactsform}">
+			<button class="btn btn-primary btn-block" type="submit">
+				<span class="glyphicon glyphicon-user-plus" aria-hidden="true"></span>
+				Agregar Contacto
+			</button>
+		</a> <a href="#" th:href="@{/login?logout}">
+
+			<button class="btn btn-primary btn-block" type="submit">
+				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+				Log out
+			</button>
+		</a>
+	</div>
+</body>
 </html>

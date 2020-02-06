@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.tkksys.backendninja.model.ContactModel;
 import com.tkksys.backendninja.service.ContactService;
@@ -27,7 +28,7 @@ public class ContactController {
 	
 	@GetMapping("/cancel")
 	private String cancel() {
-		return ViewConstants.CONTACTS;
+		return "redirect:/contacts/showcontacts";
 	}
 	
 	@GetMapping("/contactsform")
@@ -45,6 +46,13 @@ public class ContactController {
 		}else {
 			model.addAttribute("result", 0);
 		}
-		return ViewConstants.CONTACTS;
+		return "redirect:/contacts/showcontacts";
+	}
+	
+	@GetMapping("/showcontacts")
+	public ModelAndView showContact() {
+		ModelAndView mav = new ModelAndView(ViewConstants.CONTACTS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
+		mav.addObject("contacts", contactService.findAllContacts());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
+		return mav;
 	}
 }
