@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +64,8 @@ public class ContactController {
 	public ModelAndView showContact() {
 		ModelAndView mav = new ModelAndView(ViewConstants.CONTACTS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
 		mav.addObject("contacts", contactService.findAllContacts());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		mav.addObject("username", user.getUsername());
 		return mav;
 	}
 	
