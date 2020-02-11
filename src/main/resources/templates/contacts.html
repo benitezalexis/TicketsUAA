@@ -70,13 +70,14 @@
 				<span class="glyphicon glyphicon-user-plus" aria-hidden="true"></span>
 				Agregar Contacto
 			</button>
-		</a> <a href="#" th:href="@{/login?logout}">
+		</a> 
+		<form th:action="@{/logout}" method="POST">
 
 			<button class="btn btn-primary btn-block" type="submit">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 				Log out
 			</button>
-		</a>
+		</form>
 	</div>
 </body>
 </html>

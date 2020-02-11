@@ -33,7 +33,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/loginsuccess").permitAll()
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll();
-		super.configure(http);
+		//super.configure(http);
+		/**
+		 * You should not call super.configure(http) since you want to use a custom security configuration.
+		 * The error is caused because the parent configure(http) method is already calling .authorizeRequests().anyRequest().authenticated() and as the error message mentions 
+		 */
 	}
 
 	
