@@ -22,21 +22,39 @@ import com.tkksys.backendninja.model.ContactModel;
 import com.tkksys.backendninja.service.ContactService;
 import com.tkksys.backendninja.util.ViewConstants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ContactController.
+ */
 @Controller
 @RequestMapping("/contacts")
 public class ContactController {
 
+	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(ContactController.class);
 	
+	/** The contact service. */
 	@Autowired
 	@Qualifier("contactServiceImpl")
 	private ContactService contactService;
 	
+	/**
+	 * Cancel.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/cancel")
 	private String cancel() {
 		return "redirect:/contacts/showcontacts";
 	}
 	
+	/**
+	 * Redirecto contact form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") //AUTORIZACION A NIVEL DE METODO POR TIPO DE ROLE
 	@GetMapping("/contactsform")
 	private String redirectoContactForm(@RequestParam(name="id", required=false) int id, Model model) { //ES required=false PARA QUE EL FORMULARIO PUEDA SER USADO AL AGREGAR NUEVO CONTACTO
@@ -48,6 +66,13 @@ public class ContactController {
 		return ViewConstants.CONTACT_FORM;
 	}
 	
+	/**
+	 * Adds the contact.
+	 *
+	 * @param contactModel the contact model
+	 * @param model the model
+	 * @return the string
+	 */
 	@PostMapping("/addcontact")
 	public String addContact(@ModelAttribute(name="contactModel") ContactModel contactModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
 		LOG.info("--METHOD: addContact() --PARAMS:  "+contactModel.toString());
@@ -60,6 +85,11 @@ public class ContactController {
 		return "redirect:/contacts/showcontacts";
 	}
 	
+	/**
+	 * Show contact.
+	 *
+	 * @return the model and view
+	 */
 	@GetMapping("/showcontacts")
 	public ModelAndView showContact() {
 		ModelAndView mav = new ModelAndView(ViewConstants.CONTACTS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
@@ -69,6 +99,12 @@ public class ContactController {
 		return mav;
 	}
 	
+	/**
+	 * Removes the contact.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 	@GetMapping("/removecontact")
 	public ModelAndView removeContact(@RequestParam(name="id", required=true) int id) {
 		contactService.removeContact(id);
