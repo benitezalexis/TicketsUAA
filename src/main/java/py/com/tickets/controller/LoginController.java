@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import py.com.tickets.util.ViewConstants;
@@ -27,7 +28,7 @@ public class LoginController {
 	 * @param logout the logout
 	 * @return the string
 	 */
-	@GetMapping("/login")
+	@RequestMapping({ "/login" })
 	public String showLoginForm(Model model, @RequestParam(name = "error", required = false) String error,
 			@RequestParam(name = "logout", required = false) String logout) {
 		LOG.info("--METHOD: showLoginForm() --PARAMS: error=" + error + ", logout=" + logout);
@@ -42,10 +43,10 @@ public class LoginController {
 	 *
 	 * @return the string
 	 */
-	@GetMapping({ "/loginsuccess", "/" })
+	@GetMapping({ "/loginsuccess", "/", "/home", "/index" })
 	public String loginCheck() {
 		LOG.info("--METHOD: loginCheck()");
-		LOG.info("Returning to contacts view");
-		return ViewConstants.CONTACTS;
+		LOG.info("Retorna la vista al dashboard");
+		return ViewConstants.DASHBOARD;
 	}
 }
