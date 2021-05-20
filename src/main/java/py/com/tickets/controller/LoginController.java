@@ -15,36 +15,37 @@ import py.com.tickets.util.ViewConstants;
  */
 @Controller
 public class LoginController {
-	
+
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(LoginController.class);
 
 	/**
 	 * Show login form.
 	 *
-	 * @param model the model
-	 * @param error the error
+	 * @param model  the model
+	 * @param error  the error
 	 * @param logout the logout
 	 * @return the string
 	 */
 	@GetMapping("/login")
-	public String showLoginForm(Model model, @RequestParam(name="error", required=false) String error, @RequestParam(name="logout", required=false) String logout) {
-		LOG.info("--METHOD: showLoginForm() --PARAMS: error="+error+", logout="+logout);
+	public String showLoginForm(Model model, @RequestParam(name = "error", required = false) String error,
+			@RequestParam(name = "logout", required = false) String logout) {
+		LOG.info("--METHOD: showLoginForm() --PARAMS: error=" + error + ", logout=" + logout);
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
 		LOG.info("Returning to login view");
 		return ViewConstants.LOGIN;
 	}
-	
+
 	/**
 	 * Login check.
 	 *
 	 * @return the string
 	 */
-	@GetMapping({"/loginsuccess", "/"})
+	@GetMapping({ "/loginsuccess", "/" })
 	public String loginCheck() {
 		LOG.info("--METHOD: loginCheck()");
-			LOG.info("Returning to contacts view");
-			return "redirect:/contacts/showcontacts";
+		LOG.info("Returning to contacts view");
+		return ViewConstants.CONTACTS;
 	}
 }

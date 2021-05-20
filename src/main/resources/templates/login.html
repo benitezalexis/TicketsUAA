@@ -1,41 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>Acceso</title>
-		<!-- JQuery JavaScript -->
-		<!--  script src="https://code.jquery.com/jquery-3.4.1.min.js"></script-->
-		<script src="/js/jquery-3.6.0.js"></script>
-		<!-- Latest compiled and minified JavaScript -->
-		<!-- script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script-->
-		<script src="/js/bootstrap.min.js"></script>
-		<!-- Latest compiled and minified CSS -->
-		<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"-->
-		<link rel='stylesheet' href="#" th:href="@{/css/bootstrap.min.css}" media="screen" type="text/css" />
-		<!-- link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'-->
-		<link rel='stylesheet' href="#" th:href="@{/css/jquery-ui.css}" media="screen" type="text/css" />
-		<link rel='stylesheet' href="#" th:href="@{/css/style.css}" media="screen" type="text/css" />
-	</head>
-	<body>
-		<div class="container">
-			<form class="form-signin" th:action="@{/logincheck}" method="POST">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				<h1>Acceso!! <img th:src="@{/imgs/candado.png}"/></h1>
-				<br>
-				<label for="inputMail" class="sr-only">Username</label>
-				<input type="text" class="form-control" placeholder="Username" name="username" id="username"/> 
-				<label for="inputPassword" class="sr-only">Password</label>
-				<input type="password" class="form-control" placeholder="Password" name="password" id="password"/>
-				<div th:if="${error != null}" class="alert alert-danger" role="alert">Invalid Username or Password</div>
-				<div th:if="${logout != null}" class="alert alert-info" role="alert">Logout Successfully</div>
-				<button class="btn btn-ld btn-primary btn-blck" type="submit">
-					<span class="glyphicon glyphicon-log-in aria-hidden="true></span> Sign in
-				</button>
-			</form>
-	
-			<div class="login-help">
-				<a href="#">Forgot Password</a>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<!-- jQuery -->
+<script src="/admin/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/admin/dist/js/adminlte.min.js"></script>
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" type="text/css" media="screen"  
+      href="/admin/plugins/fontawesome-free/css/all.min.css" th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
+<!-- icheck bootstrap -->
+<link rel="stylesheet" type="text/css" media="screen"  
+      href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css" th:href="@{/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+<!-- Theme style -->
+	<link rel="stylesheet" type="text/css" media="screen"  
+      href="/admin/dist/css/adminlte.min.css"  th:href="@{/admin/dist/css/adminlte.min.css}">
+ 
+</head>
+<body>
+	<div class="login-box">
+		<!-- /.login-logo -->
+		<div class="card card-outline card-primary">
+			<div class="card-header text-center">
+				<b>Sis</b>TICKETS
 			</div>
+			<div class="card-body">
+				<p class="login-box-msg">Ingresa para iniciar sesión</p>
+
+				<form th:action="@{/logincheck}" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="Usuario"
+							name="username" id="username">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-user"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" class="form-control" placeholder="Password"
+							name="password" id="password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+
+
+					<div th:if="${error != null}" class="alert alert-danger"
+						role="alert">Usuario o Contraseña Invalida</div>
+					<div th:if="${logout != null}" class="alert alert-info"
+						role="alert">Sesión Cerrada Exitosamente</div>
+					<div class="row">
+						<div class="col-8">
+							<div class="icheck-primary">
+								<input type="checkbox" id="remember"> <label
+									for="remember"> Recordar mi contraseña </label>
+							</div>
+						</div>
+						<!-- /.col -->
+						<div class="col-4">
+							<button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+						</div>
+						<!-- /.col -->
+					</div>
+				</form>
+
+				<!-- div class="social-auth-links text-center mt-2 mb-3">
+					<a href="#" class="btn btn-block btn-primary"> <i
+						class="fab fa-facebook mr-2"></i> Sign in using Facebook
+					</a> <a href="#" class="btn btn-block btn-danger"> <i
+						class="fab fa-google-plus mr-2"></i> Sign in using Google+
+					</a>
+				</div>
+				<!-- /.social-auth-links -->
+
+				<p class="mb-1">
+					<a href="forgot-password.html">Olvide mi contraseña</a>
+				</p>
+				<p class="mb-0">
+					<a href="register.html" class="text-center">Registrar</a>
+				</p>
+			</div>
+			<!-- /.card-body -->
 		</div>
-	</body>
+		<!-- /.card -->
+	</div>
+	<!-- /.login-box -->
+</body>
 </html>
