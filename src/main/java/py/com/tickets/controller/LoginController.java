@@ -43,7 +43,7 @@ public class LoginController {
 	 *
 	 * @return the string
 	 */
-	@GetMapping({ "/loginsuccess", "/", "/home", "/index" })
+	@GetMapping({ "/logincheck", "/", "/home", "/index" })
 	public String loginCheck() {
 		LOG.info("--METHOD: loginCheck()");
 		LOG.info("Retorna la vista al dashboard");
