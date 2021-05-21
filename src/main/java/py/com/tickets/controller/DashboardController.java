@@ -12,19 +12,18 @@ import py.com.tickets.util.ViewConstants;
 @Controller
 public class DashboardController {
 
-    @RequestMapping({"/dashboard","/admin"})
+    @RequestMapping({"/dashboard","/"})
     public String dashboard(){
         return ViewConstants.DASHBOARD; 
     }
 
-    @RequestMapping({"/admin/user/list","/admin/user"})
-    public String listUser(){
-        return "admin/user-list";
+    @RequestMapping({"/dashboard/users/","/users"})
+    public String users(){
+        return ViewConstants.USERS;
     }
-
-    @RequestMapping("/admin/user/add")
-    public String addUser(){
-        return "admin/user-add";
+    
+    @RequestMapping({"/dashboard/tickets/","/tickets"})
+    public String tickets(){
+        return ViewConstants.TICKETS;
     }
-
 }
