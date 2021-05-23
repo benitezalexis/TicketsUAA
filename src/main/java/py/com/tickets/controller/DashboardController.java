@@ -26,4 +26,9 @@ public class DashboardController {
     public String tickets(){
         return ViewConstants.TICKETS;
     }
+    
+    @RequestMapping({"/dashboard/customers/","/customers"})
+    public String customers(){
+        return ViewConstants.CUSTOMERS;
+    }
 }
