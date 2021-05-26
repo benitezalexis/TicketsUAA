@@ -11,7 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @Entity
+@NoArgsConstructor
 @Table(name = "users_roles", uniqueConstraints = @UniqueConstraint(columnNames = { "role", "username" }))
 public class UserRol {
 	
@@ -30,34 +35,6 @@ public class UserRol {
 	public UserRol(User user, String role) {
 		super();
 		this.user = user;
-		this.role = role;
-	}
-
-	public UserRol() {
-		super();
-	}
-
-	public Integer getUserRoleId() {
-		return userRoleId;
-	}
-
-	public void setUserRoleId(Integer userRoleId) {
-		this.userRoleId = userRoleId;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
 		this.role = role;
 	}
 

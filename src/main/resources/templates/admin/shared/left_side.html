@@ -19,7 +19,7 @@
 			<ul class="nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item has-treeview">
-					<a href="#" class="d-block nav-link">Alexander Pierce</a>
+					<a href="#" class="d-block nav-link"><span th:text="${username}"></span></a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<form th:action="@{/logout}" method="POST">

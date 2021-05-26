@@ -1,5 +1,6 @@
 package py.com.tickets.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +17,8 @@ public class DashboardController {
     public String dashboard(){
         return ViewConstants.DASHBOARD; 
     }
-
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //AUTORIZACION A NIVEL DE METODO POR TIPO DE ROLE
     @RequestMapping({"/dashboard/users/","/users"})
     public String users(){
         return ViewConstants.USERS;
