@@ -1,7 +1,6 @@
 package py.com.tickets.controller;
 
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import py.com.tickets.entity.Customer;
-import py.com.tickets.repository.CustomerRepository;
+import py.com.tickets.service.CustomerService;
 import py.com.tickets.util.ViewConstants;
 
 /**
@@ -20,9 +19,8 @@ import py.com.tickets.util.ViewConstants;
 
 @Controller
 public class DashboardController {
-    @Autowired
-
-    private CustomerRepository cliente;
+	 @Autowired
+     private CustomerService cliente;
 
 
     @RequestMapping({"/dashboard","/"})
@@ -43,8 +41,11 @@ public class DashboardController {
 
     @RequestMapping({"/dashboard/customers/","/customers"})
     public String customers(Model model){
-    	List<Customer> clientes= cliente.findAll();
-    	model.addAttribute("clientes", clientes);
+    	List<Customer> clientes= cliente.listCustomers();
+
+    	model.addAttribute("customers", clientes);
+
+    	model.addAttribute("customer", new Customer());
         return ViewConstants.CUSTOMERS;
     }
 }

@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Customers</title>
+	<title>Cliente</title>
 </head>
 
 <body>
@@ -37,8 +37,11 @@
 						<div class="card">
 							<div class="card-header">
 								<h3 class="card-title">
-									<button type="button" class="btn btn-success "><i class="fas fa-plus"></i>
+									<button type="button" class="btn btn-success "  data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus"></i>
 										Agregar</button>
+
+										<div th:replace="admin/customers/modalAgregar :: modalAgregar"></div>
+
 								</h3>
 							</div>
 							<!-- /.card-header -->
@@ -55,35 +58,35 @@
 											<th>Opciones</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr th:each="cliente : ${clientes}">
-											<td th:text="${cliente.getCi()}">--</td>
-											<td th:text="${cliente.getfirstname()}">--</td>
-											<td th:text="${cliente.getlastname()}">--</td>
-											<td th:text="${cliente.getEmail()}">--</td>
-											<td th:text="${cliente.gettelephone()}">--</td>
-											<td th:text="${cliente.getaddress()}">--</td>
+									<div th:if="${customers != null and !customers.empty}">
+									<tbody >
+										<tr th:each="client : ${customers}">
+											<td th:text="${client.getCi()}">--</td>
+											<td th:text="${client.getfirstname()}">--</td>
+											<td th:text="${client.getlastname()}">--</td>
+											<td th:text="${client.getEmail()}">--</td>
+											<td th:text="${client.gettelephone()}">--</td>
+											<td th:text="${client.getaddress()}">--</td>
 											<td>
 												<div class="btn-group" role="group" aria-label="Basic example">
-													<button type="button" class="btn btn-primary">Editar</button>
-													<button type="button" class="btn btn-danger">Eliminar</button>
+													<a th:href="@{edit/} + ${client.getCi()}"><button type="button" class="btn btn-primary">Editar</button></a>
+                                  					<a th:href="@{delete/} + ${client.getCi()}"><button  type="button" class="btn btn-danger">Eliminar</button></a>
 											   </div>
 											</td>
 
 										</tr>
 
 									</tbody>
+									</div>
+								
 								</table>
+									<div th:if="${customers == null or customers.empty}">
+									  La lista de clientes esta vacia
+									</div>
 							</div>
 							<!-- /.card-body -->
 							<div class="card-footer clearfix">
-								<!--<ul class="pagination pagination-sm m-0 float-right">
-									<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-								</ul>-->
+						
 							</div>
 						</div>
 						<!-- /.card -->
@@ -95,158 +98,8 @@
 		<!-- Main content -->
 
 
-
-
-
-
-
-
-
-
-
-		<!--
-<div th:if="${clientes != null and !clientes.empty}">
-            <table border="1">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                </tr>
-                <tr th:each="cliente : ${clientes}">
-                    <td th:text="${cliente.getCi()}">Mostrar Nombre</td>
-                    
-                </tr>
-            </table>
-        </div>
-        <div th:if="${personas == null or personas.empty}">
-            La lista de personas está vacía
-        </div>
--->
-
-
 	</div>
 
-=======
-	<div layout:fragment="content">
-
-
-
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<div class="container-fluid">
-				<div class="row mb-2">
-					<div class="col-sm-6">
-						<h1>Lista Cliente</h1>
-					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">Simple Tables</li>
-						</ol>
-					</div>
-				</div>
-			</div><!-- /.container-fluid -->
-		</section>
-
-		<!-- Main content -->
-		<section class="content">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<h3 class="card-title">
-									<button type="button" class="btn btn-success "><i class="fas fa-plus"></i>
-										Agregar</button>
-								</h3>
-							</div>
-							<!-- /.card-header -->
-							<div class="card-body">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>Ci</th>
-											<th>Nombre</th>
-											<th>Apellido</th>
-											<th>Email</th>
-											<th>Telefono</th>
-											<th>Direccion</th>
-											<th>Opciones</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="cliente : ${clientes}">
-											<td th:text="${cliente.getCi()}">--</td>
-											<td th:text="${cliente.getfirstname()}">--</td>
-											<td th:text="${cliente.getlastname()}">--</td>
-											<td th:text="${cliente.getEmail()}">--</td>
-											<td th:text="${cliente.gettelephone()}">--</td>
-											<td th:text="${cliente.getaddress()}">--</td>
-											<td>
-												<div class="btn-group" role="group" aria-label="Basic example">
-													<button type="button" class="btn btn-primary">Editar</button>
-													<button type="button" class="btn btn-danger">Eliminar</button>
-											   </div>
-											</td>
-
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-							<!-- /.card-body -->
-							<div class="card-footer clearfix">
-								<!--<ul class="pagination pagination-sm m-0 float-right">
-									<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-								</ul>-->
-							</div>
-						</div>
-						<!-- /.card -->
-					</div>
-				</div>
-			</div>
-
-		</section>
-		<!-- Main content -->
-
-
-
-
-
-
-
-
-
-
-
-		<!--
-<div th:if="${clientes != null and !clientes.empty}">
-            <table border="1">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                </tr>
-                <tr th:each="cliente : ${clientes}">
-                    <td th:text="${cliente.getCi()}">Mostrar Nombre</td>
-                    
-                </tr>
-            </table>
-        </div>
-        <div th:if="${personas == null or personas.empty}">
-            La lista de personas está vacía
-        </div>
--->
-
-
-	</div>
-e)
 
 
 </body>

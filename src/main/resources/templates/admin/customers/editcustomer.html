@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/admin/admin_layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Editar cliente</title>
+</head>
+
+
+<body>
+	<div layout:fragment="content">
+
+		<form th:action="@{/saveEditCustomer}" th:object="${customer}" method="POST" class="was-validated">
+			<div id="details">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="card">
+								<div class="card-header  bg-dark text-white">
+									<h4>Editar</h4>
+								</div>
+								<div class="card-body">
+									<div class="form-group">
+										<label for="nombre">Ci</label>
+										<input type="text" class="form-control" name="nombre" required="true"
+											th:field="*{ci}" />
+									</div>
+									<div class="form-group">
+										<label for="apellido">Nombre</label>
+										<input type="text" class="form-control" name="apellido" required="true"
+											th:field="*{firstname}" />
+									</div>
+									<div class="form-group">
+										<label for="apellido">Apellido</label>
+										<input type="text" class="form-control" name="apellido" required="true"
+											th:field="*{lastname}" />
+									</div>
+									<div class="form-group">
+										<label for="email">Email</label>
+										<input type="email" class="form-control" name="email" required="true"
+											th:field="*{email}" />
+									</div>
+									<div class="form-group">
+										<label for="telefono">Telephone</label>
+										<input type="text" class="form-control" name="telefono" required="true"
+											th:field="*{telephone}" />
+									</div>
+									<div class="form-group">
+										<label for="apellido">Direccion</label>
+										<input type="text" class="form-control" name="apellido" required="true"
+											th:field="*{address}" />
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-success" type="submit">Guardar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>
+</body>
+
+</html>
