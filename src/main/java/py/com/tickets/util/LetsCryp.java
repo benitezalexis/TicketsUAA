@@ -6,15 +6,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * The Class TestCryp.
  */
-public class TestCryp {
+public class LetsCryp {
 
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
-	public static void main(String[] args) {
+	public String encrypt(String pass) {
 		BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
-		System.out.println(pe.encode("administrador"));
+		String newPass = pe.encode(pass);
+		return newPass; 
 	}
 }

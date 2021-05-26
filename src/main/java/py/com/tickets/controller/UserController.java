@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import py.com.tickets.component.ContactConverter;
-import py.com.tickets.entity.Contact;
-import py.com.tickets.model.ContactModel;
-import py.com.tickets.service.ContactService;
+import py.com.tickets.component.UserConverter;
+import py.com.tickets.model.UserModel;
+import py.com.tickets.service.UserService;
 import py.com.tickets.util.ViewConstants;
 
 // TODO: Auto-generated Javadoc
@@ -27,16 +26,19 @@ import py.com.tickets.util.ViewConstants;
  * The Class ContactController.
  */
 @Controller
-@RequestMapping("/contacts")
-public class ContactController {
+@RequestMapping("/users")
+public class UserController {
 
 	/** The Constant LOG. */
-	private static final Log LOG = LogFactory.getLog(ContactController.class);
+	private static final Log LOG = LogFactory.getLog(UserController.class);
+	
+	@Autowired
+	private UserConverter userConverter;
 	
 	/** The contact service. */
 	@Autowired
 	@Qualifier("contactServiceImpl")
-	private ContactService contactService;
+	private UserService userService;
 	
 	/**
 	 * Cancel.
@@ -45,7 +47,7 @@ public class ContactController {
 	 */
 	@GetMapping("/cancel")
 	private String cancel() {
-		return "redirect:/contacts/showcontacts";
+		return "redirect:/users/showusers";
 	}
 	
 	/**
@@ -56,14 +58,14 @@ public class ContactController {
 	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") //AUTORIZACION A NIVEL DE METODO POR TIPO DE ROLE
-	@GetMapping("/contactsform")
-	private String redirectoContactForm(@RequestParam(name="id", required=false) int id, Model model) { //ES required=false PARA QUE EL FORMULARIO PUEDA SER USADO AL AGREGAR NUEVO CONTACTO
-		ContactModel contact = new ContactModel(); 
+	@GetMapping("/userform")
+	private String redirecToUserForm(@RequestParam(name="id", required=false) Long id, Model model) { //ES required=false PARA QUE EL FORMULARIO PUEDA SER USADO AL AGREGAR NUEVO CONTACTO
+		UserModel user = new UserModel(); 
 		if(id != 0) {
-			contact = contactService.findContactByIdModel(id);
+			user = userConverter.convertUser2UserModel(userService.getById(id));
 		}
-		model.addAttribute("contactModel", contact);
-		return ViewConstants.CONTACT_FORM;
+		model.addAttribute("contactModel", user);
+		return ViewConstants.USERS;
 	}
 	
 	/**
@@ -73,16 +75,16 @@ public class ContactController {
 	 * @param model the model
 	 * @return the string
 	 */
-	@PostMapping("/addcontact")
-	public String addContact(@ModelAttribute(name="contactModel") ContactModel contactModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
-		LOG.info("--METHOD: addContact() --PARAMS:  "+contactModel.toString());
+	@PostMapping("/adduser")
+	public String addUser(@ModelAttribute(name="userModel") UserModel userModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
+		LOG.info("--METHOD: addContact() --PARAMS:  "+userModel.toString());
 		
-		if(null != contactService.addContact(contactModel)) {			
+		if(null != userService.insert(userConverter.convertUserModel2User(userModel))) {			
 			model.addAttribute("result", 1);
 		}else {
 			model.addAttribute("result", 0);
 		}
-		return "redirect:/contacts/showcontacts";
+		return "redirect:/users/showusers";
 	}
 	
 	/**
@@ -90,24 +92,27 @@ public class ContactController {
 	 *
 	 * @return the model and view
 	 */
-	@GetMapping("/showcontacts")
-	public ModelAndView showContact() {
-		ModelAndView mav = new ModelAndView(ViewConstants.CONTACTS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
-		mav.addObject("contacts", contactService.findAllContacts());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
+	@GetMapping("/showusers")
+	public ModelAndView showUser() {
+		ModelAndView mav = new ModelAndView(ViewConstants.USERS);//PASAMOS LA VISTA DE LA PAGINA USERS AL MAV
+		mav.addObject("users", userService.getList(null)); //AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		mav.addObject("username", user.getUsername());
 		return mav;
 	}
 	
 	/**
-	 * Removes the contact.
+	 * Removes the user.
 	 *
 	 * @param id the id
 	 * @return the model and view
 	 */
-	@GetMapping("/removecontact")
-	public ModelAndView removeContact(@RequestParam(name="id", required=true) int id) {
-		contactService.removeContact(id);
-		return showContact();
+	@GetMapping("/removeuser")
+	public ModelAndView removeContact(@RequestParam(name="id", required=true) Long id) {
+		py.com.tickets.entity.User user = userService.getById(id);
+		if(null != user) {
+			userService.delete(id);;
+		}
+		return showUser();
 	}
 }
