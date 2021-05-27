@@ -20,11 +20,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class User {
-
-	@Id
-	@Column(name = "id", unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	
 	@Id
 	@GeneratedValue()
@@ -47,9 +42,8 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public User(Long id, String username, String password, boolean enabled, Set<UserRol> userRole) {
+	public User(String username, String password, boolean enabled, Set<UserRol> userRole) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
