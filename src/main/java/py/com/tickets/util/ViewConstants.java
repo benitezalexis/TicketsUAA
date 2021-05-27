@@ -22,4 +22,7 @@ public class ViewConstants {
 	
 	/** The Constant CONTACTS. */
 	public static final  String CONTACTS = "admin/contacts";
+	
+	/** The Constant CUSTOMERS. */
+	public static final  String CUSTOMERS ="admin/customers";
 }
