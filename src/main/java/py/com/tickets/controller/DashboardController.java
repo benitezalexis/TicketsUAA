@@ -1,7 +1,10 @@
 package py.com.tickets.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import py.com.tickets.util.ViewConstants;
@@ -28,4 +31,12 @@ public class DashboardController {
     public String tickets(){
         return ViewConstants.TICKETS;
     }
+    
+    @ModelAttribute("username")
+    public String messages() {
+    	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String username = user.getUsername();
+        return username;
+    }
+    
 }
