@@ -19,7 +19,7 @@ import py.com.tickets.entity.UserRol;
 import py.com.tickets.repository.UserRepository;
 
 @Service("userService")
-public class CredentialService implements UserDetailsService{
+public class UserService implements UserDetailsService{
 	
 	@Autowired
 	@Qualifier("userRepository")
