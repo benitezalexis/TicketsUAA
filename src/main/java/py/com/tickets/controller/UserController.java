@@ -1,11 +1,12 @@
 package py.com.tickets.controller;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ import py.com.tickets.util.ViewConstants;
  * The Class ContactController.
  */
 @Controller
-@RequestMapping("/users")
+//@RequestMapping("/users")
 public class UserController {
 
 	/** The Constant LOG. */
@@ -71,8 +72,8 @@ public class UserController {
 	 * @param model the model
 	 * @return the string
 	 */
-	@PostMapping("/addcontact")
-	public String addContact(@ModelAttribute(name="contactModel") UserModel userModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
+	@PostMapping("/addNewUser")
+	public String insert(@ModelAttribute(name="userModel") UserModel userModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
 		LOG.info("--METHOD: addContact() --PARAMS:  "+userModel.toString());
 		
 		if(null != userService.insert(userModel)) {			
@@ -80,7 +81,7 @@ public class UserController {
 		}else {
 			model.addAttribute("result", 0);
 		}
-		return "redirect:/contacts/showcontacts";
+		return "redirect:/users";
 	}
 	
 	/**
@@ -88,14 +89,28 @@ public class UserController {
 	 *
 	 * @return the model and view
 	 */
-	@GetMapping("/showAll")
+	/*@RequestMapping(value = "showAll", method = RequestMethod.GET)
 	public ModelAndView showAll() {
-		ModelAndView mav = new ModelAndView(ViewConstants.USERS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
+		//ModelAndView mav = new ModelAndView(ViewConstants.USERS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("users", userService.findAll());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		mav.addObject("username", user.getUsername());
+		mav.setViewName("users");
 		return mav;
-	}
+	}*/
+	/*
+	 @RequestMapping(value = "users", method = RequestMethod.GET)
+     public ModelAndView showAll() {
+         ModelAndView mav = new ModelAndView(ViewConstants.USERS);
+         mav.addObject("users", userService.findAll());
+         return mav;
+     }*/
+	
+	@ModelAttribute("users")
+    public List<UserModel> messages() {
+        return userService.findAll();
+    }
 	
 	/**
 	 * Removes the contact.
@@ -103,9 +118,9 @@ public class UserController {
 	 * @param id the id
 	 * @return the model and view
 	 */
-	@GetMapping("/remove")
+	/*@GetMapping("/remove")
 	public ModelAndView remove(@RequestParam(name="username", required=true) String username) {
 		userService.remove(username);
 		return showAll();
-	}
+	}*/
 }

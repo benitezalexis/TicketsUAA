@@ -56,7 +56,7 @@
 										<tr>
 											<th scope="col">Usuario</th>
 											<th scope="col">Estado</th>
-											<th scope="col">Administrar <button type="submit" class="btn btn-primary float-right">Nuevo</button></th>
+											<th scope="col">Administrar <button type="button" class="btn btn-primary float-right newUser">Nuevo</button></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -109,28 +109,28 @@
 								</div>
 							</div>
 							<!-- /.card-header -->
-							<form>
+							<form action="#" th:action="@{/contacts/addcontact}" th:object="${contactModel}" method="post">
 				                <div class="card-body">
 				                  <div class="form-group">
 				                    <label for="exampleInputEmail1">Usuario</label>
-				                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ingrese el usuario">
+				                    <input type="text" class="form-control" id="inputUser" placeholder="Ingrese el usuario" disabled required th:field="*{username}" th:value="${username}">
 				                  </div>
 				                  <div class="form-group">
 				                    <label for="exampleInputPassword1">Contraseña</label>
-				                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese la contraseña">
+				                    <input type="password" class="form-control" id="inputPass" placeholder="Ingrese la contraseña" disabled required th:field="*{password}" th:value="${password}">
 				                  </div>
 				                  <div class="form-group">
 			                        <label>Rol del Usuario</label>
-			                        <select class="form-control">
+			                        <select id="selectRole" class="form-control" disabled required th:field="*{userRol}" th:value="${userRol}">
 			                          <option>Invitado</option>
 			                          <option>Staff</option>
 			                          <option>Supervisor</option>
 			                          <option>Administrador</option>
-			                        </select>
+			                        </select> 
 			                      </div>
 				                  <div class="form-group">
 				                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-				                      <input type="checkbox" class="custom-control-input" id="customSwitch3">
+				                      <input type="checkbox" class="custom-control-input" id="customSwitch3" disabled required th:field="*{enabled}" th:value="${enabled}">
 				                      <label class="custom-control-label" for="customSwitch3">Estado de usuario (Habilitado / Deshabilitado)</label>
 				                    </div>
 				                  </div>
@@ -138,8 +138,8 @@
 				                <!-- /.card-body -->
 				
 				                <div class="card-footer">
-				                  <button type="submit" class="btn btn-warning">Limpiar</button>
-				                  <button type="submit" class="btn btn-success float-right">Guardar</button>
+				                  <button type="button" class="btn btn-warning btnClean">Limpiar</button>
+				                  <button type="submit" class="btn btn-success float-right btnSave">Guardar</button>
 				                </div>
 				              </form>
 							<!-- /.card-footer -->
@@ -160,76 +160,51 @@
 		<!-- jQuery -->
 		<script src="/admin/plugins/jquery/jquery.min.js"></script>
 		<script>
-			$(function () {
-			    $("#example1").DataTable({
-			      "responsive": true, 
-			      "lengthChange": false, 
-			      "autoWidth": false,
-			      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-			    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-			  });
+			$(document).ready( function () {
+				$(function () {
+				    $("#example1").DataTable({
+				      "responsive": true, 
+				      "lengthChange": false, 
+				      "autoWidth": false,
+				      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]/*,
+				      "serverSide": true,
+				        "ajax": {
+				            "url": "/users/showAll",
+				            "type": "GET",
+				            "dataType": "json",
+				            "contentType": "application/json",
+				            "data": function (d) {
+				                return JSON.stringify(d);
+				            }
+				        },
+				        "columns": [
+				            {"data": "username"},
+				            {"data": "enabled"}
+				        ]*/
+				    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				  });
+				
+				$(".newUser").click(() => {
+				    $("#inputUser").removeAttr("disabled");
+				    $("#inputPass").removeAttr("disabled");
+				    $("#selectRole").removeAttr("disabled");
+				    $("#customSwitch3").removeAttr("disabled");
+				});
+				
+				$(".btnClean").click(() => {
+				    $("#inputUser").val("");
+				    $("#inputUser").attr("disabled", "disabled");
+				    $("#inputPass").val("");
+				    $("#inputPass").attr("disabled", "disabled");
+				    $("#selectRole").val("");
+				    $("#selectRole").attr("disabled", "disabled");
+				    $("#customSwitch3").prop('checked', false);
+				    $("#customSwitch3").attr("disabled", "disabled");
+				});
+			});
+			
 			
 			console.log("Pagina de Usuarios");
-			var user = {};
-
-			$(document).ready(function() {
-				
-
-								/** TODO: Function OnClick **/
-
-								/** TODO: Function **/
-
-								/** TODO: OnLoad **/
-								user.findAll = function() {
-
-									$
-											.ajax({
-												url : "http://localhost:1111/api/v1/user",
-												type : "GET",
-												beforeSend : function(xhr) {
-													xhr.setRequestHeader(
-															"Accept",
-															"application/json");
-													xhr.setRequestHeader(
-															"Content-Type",
-															"application/json");
-												},
-												success : function(data) {
-													console.log(data);
-													var event_data = '';
-													$.each(data.user, function(
-															index, value) {
-														/*console.log(value);*/
-														event_data += '<tr>';
-														event_data += '<td>'
-																+ value.name
-																+ '</td>';
-														event_data += '<td>'
-																+ value.id
-																+ '</td>';
-														event_data += '</tr>';
-													});
-													$("#list_table_json")
-															.append(event_data);
-
-												},
-												error : function(jqXHR,
-														textStatus, errorThrown) {
-													var responseText = jQuery
-															.parseJSON(jqXHR.responseText);
-													console.log(responseText);
-													console.log('Error: '
-															+ textStatus
-															+ ' - '
-															+ errorThrown);
-												}
-											});
-
-								};
-
-								user.findAll();
-
-							});
 		</script>
 	</th:block>
 
