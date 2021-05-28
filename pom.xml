@@ -112,6 +112,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>tickets</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
