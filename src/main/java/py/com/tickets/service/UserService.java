@@ -1,19 +1,15 @@
 package py.com.tickets.service;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 import py.com.tickets.entity.User;
 import py.com.tickets.model.UserModel;
 
-public interface UserService {
-
-	public abstract UserModel insert(UserModel userModel);
+@Service
+public interface UserService extends GenericService<User>{
 	
-	public abstract List<UserModel> findAll();
+	public UserModel findByUserModel(UserModel userModel);
 	
-	public abstract void remove(String username);
+	public User findByUsername(String userModel);
 	
-	public User findByUsername(String username);
-
-	public UserModel findByUserModel(String username);
 }

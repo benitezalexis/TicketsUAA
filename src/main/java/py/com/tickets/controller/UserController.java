@@ -1,126 +1,91 @@
 package py.com.tickets.controller;
 
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import py.com.tickets.component.UserConverter;
+import py.com.tickets.entity.User;
+import py.com.tickets.entity.UserRol;
 import py.com.tickets.model.UserModel;
+import py.com.tickets.service.RoleService;
 import py.com.tickets.service.UserService;
-import py.com.tickets.util.ViewConstants;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ContactController.
  */
 @Controller
-//@RequestMapping("/users")
 public class UserController {
 
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(UserController.class);
-	
+
 	/** The contact service. */
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@Autowired
+	@Qualifier("roleServiceImpl")
+	private RoleService roleService;
+
+	@Autowired
+	private UserConverter userConverter;
+
 	/**
-	 * Cancel.
-	 *
-	 * @return the string
-	 */
-	@GetMapping("/cancel")
-	private String cancel() {
-		return "redirect:/contacts/showcontacts";
-	}
-	
-	/**
-	 * Redirecto contact form.
-	 *
-	 * @param id the id
-	 * @param model the model
-	 * @return the string
-	 */
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") //AUTORIZACION A NIVEL DE METODO POR TIPO DE ROLE
-	@GetMapping("/contactsform")
-	private String redirectoContactForm(@RequestParam(name="username", required=false) String username, Model model) { //ES required=false PARA QUE EL FORMULARIO PUEDA SER USADO AL AGREGAR NUEVO CONTACTO
-		UserModel userModel = new UserModel(); 
-		if(username != null) {
-			userModel = userService.findByUserModel(username);
-		}
-		model.addAttribute("userModel", userModel);
-		return ViewConstants.USERS;
-	}
-	
-	/**
-	 * Adds the contact.
+	 * Adds nre user.
 	 *
 	 * @param userModel the contact model
-	 * @param model the model
+	 * @param model     the model
 	 * @return the string
 	 */
 	@PostMapping("/addNewUser")
-	public String insert(@ModelAttribute(name="userModel") UserModel userModel, Model model) { //El String name del @ModelAttribute debe ser igual al th:object del html y el objeto como la clase java
-		LOG.info("--METHOD: addContact() --PARAMS:  "+userModel.toString());
+	// public String addNewUser(@ModelAttribute(name = "userModel") UserModel
+	// userModel, Model model) {
+	public String addNewUser(UserModel userModel) {
+		LOG.info("--METHOD: addContact() --PARAMS:  " + userModel.toString());
+		if (userService.findByUsername(userModel.getUsername()) != null) {
+			return "admin/customers/customerexists";
+		}
+		//Primero se inserta el usuario
+		userService.insert(userConverter.convertUserModel2User(userModel));
 		
-		if(null != userService.insert(userModel)) {			
-			model.addAttribute("result", 1);
-		}else {
-			model.addAttribute("result", 0);
+		//Despues se carga el rol
+		UserRol role = new UserRol();
+		role.setUser(userConverter.convertUserModel2User(userModel));
+		role.setRole(userModel.getUserRol());
+		roleService.insert(role);
+		
+		return "redirect:/users";
+	}
+
+	@GetMapping("/delete/{username}")
+	public String delete(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		if(user != null) {			
+			userService.deleteObj(user);
 		}
 		return "redirect:/users";
 	}
-	
-	/**
-	 * Show contact.
-	 *
-	 * @return the model and view
-	 */
-	/*@RequestMapping(value = "showAll", method = RequestMethod.GET)
-	public ModelAndView showAll() {
-		//ModelAndView mav = new ModelAndView(ViewConstants.USERS);//PASAMOS LA VISTA DE LA PAGINA CONTACTS AL MAV
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("users", userService.findAll());//AGREGAMOS COMO OBJETO contacts DESDE EL SERVICE CON EL METODO findAllContacts()
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		mav.addObject("username", user.getUsername());
-		mav.setViewName("users");
-		return mav;
-	}*/
-	/*
-	 @RequestMapping(value = "users", method = RequestMethod.GET)
-     public ModelAndView showAll() {
-         ModelAndView mav = new ModelAndView(ViewConstants.USERS);
-         mav.addObject("users", userService.findAll());
-         return mav;
-     }*/
-	
-	@ModelAttribute("users")
-    public List<UserModel> messages() {
-        return userService.findAll();
-    }
-	
-	/**
-	 * Removes the contact.
-	 *
-	 * @param id the id
-	 * @return the model and view
-	 */
-	/*@GetMapping("/remove")
-	public ModelAndView remove(@RequestParam(name="username", required=true) String username) {
-		userService.remove(username);
-		return showAll();
-	}*/
+
+	@GetMapping("/edit/{username}")
+	public String editUser(User user, Model model) {
+		user = userService.findByUsername(user.getUsername());
+		model.addAttribute("user", user);
+		return "admin/customers/editcustomer";
+	}
+
+	@PostMapping({ "/saveEditUser" })
+	public String saveEditUser(User user) {
+		userService.insert(user);
+		return "redirect:/users";
+	}
+
 }

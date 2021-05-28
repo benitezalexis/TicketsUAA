@@ -62,29 +62,18 @@
 									<tbody>
 										<tr th:each="user : ${users}">
 											<td th:text="${user.username}"></td>
-											<td th:text="${user.enabled}"></td>
 											<td>
-												<a href="#" th:href="@{/contacts/contactsform?id=__${contact.id}__}">
-													<button type="button" class="btn btn-info">
-														<span class="glyphicon glyphicon-edit"></span>
-													</button>
-												</a>
-					
-												<a href="#" th:href="@{/contacts/removecontact?id=__${contact.id}__}">
-													<button type="button" class="btn btn-danger">
-														<span class="glyphicon glyphicon-trash"></span>
-													</button>
-												</a>
+												<span th:if="${user.enabled == true}">Habilitado</span>
+												<span th:unless="${user.enabled == true}">Deshabilitado</span>
+											</td>
+											<td>
+												<div class="btn-group" role="group" aria-label="Basic example">
+													<a th:href="@{edit/} + ${user.getUsername()}"><button type="button" class="btn btn-primary">Editar</button></a>
+                                  					<a th:href="@{delete/} + ${user.getUsername()}"><button  type="button" class="btn btn-danger">Eliminar</button></a>
+											   </div>
 											</td>
 										</tr>
 									</tbody>
-									<tfoot>
-										<tr>
-											<th scope="col">Usuario</th>
-											<th scope="col">Estado</th>
-											<th scope="col">Administrar</th>
-										</tr>
-									</tfoot>
 								</table>
 							</div>
 							<!-- /.card-body -->
@@ -109,29 +98,29 @@
 								</div>
 							</div>
 							<!-- /.card-header -->
-							<form action="#" th:action="@{/contacts/addcontact}" th:object="${contactModel}" method="post">
+							<form th:action="@{/addNewUser}" th:object="${userModel}" method="POST">
 				                <div class="card-body">
 				                  <div class="form-group">
-				                    <label for="exampleInputEmail1">Usuario</label>
-				                    <input type="text" class="form-control" id="inputUser" placeholder="Ingrese el usuario" disabled required th:field="*{username}" th:value="${username}">
+				                    <label for="username">Usuario</label>
+				                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese el usuario" disabled required >
 				                  </div>
 				                  <div class="form-group">
-				                    <label for="exampleInputPassword1">Contraseña</label>
-				                    <input type="password" class="form-control" id="inputPass" placeholder="Ingrese la contraseña" disabled required th:field="*{password}" th:value="${password}">
+				                    <label for="password">Contraseña</label>
+				                    <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese la contraseña" disabled required>
 				                  </div>
 				                  <div class="form-group">
 			                        <label>Rol del Usuario</label>
-			                        <select id="selectRole" class="form-control" disabled required th:field="*{userRol}" th:value="${userRol}">
-			                          <option>Invitado</option>
-			                          <option>Staff</option>
-			                          <option>Supervisor</option>
-			                          <option>Administrador</option>
+			                        <select name="userRol" id="userRol" class="form-control" disabled required>
+			                          <option value="ROLE_GUEST">Invitado</option>
+			                          <option value="ROLE_STAFF">Staff</option>
+			                          <option value="ROLE_SENIOR">Supervisor</option>
+			                          <option value="ROLE_ADMIN">Administrador</option>
 			                        </select> 
 			                      </div>
 				                  <div class="form-group">
 				                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-				                      <input type="checkbox" class="custom-control-input" id="customSwitch3" disabled required th:field="*{enabled}" th:value="${enabled}">
-				                      <label class="custom-control-label" for="customSwitch3">Estado de usuario (Habilitado / Deshabilitado)</label>
+				                      <input type="checkbox" class="custom-control-input" name="enabled" id="enabled" disabled>
+				                      <label class="custom-control-label" for="enabled">Estado de usuario (Habilitado / Deshabilitado)</label>
 				                    </div>
 				                  </div>
 				                </div>
@@ -185,21 +174,21 @@
 				  });
 				
 				$(".newUser").click(() => {
-				    $("#inputUser").removeAttr("disabled");
-				    $("#inputPass").removeAttr("disabled");
-				    $("#selectRole").removeAttr("disabled");
-				    $("#customSwitch3").removeAttr("disabled");
+				    $("#username").removeAttr("disabled");
+				    $("#password").removeAttr("disabled");
+				    $("#userRol").removeAttr("disabled");
+				    $("#enabled").removeAttr("disabled");
 				});
 				
 				$(".btnClean").click(() => {
-				    $("#inputUser").val("");
-				    $("#inputUser").attr("disabled", "disabled");
-				    $("#inputPass").val("");
-				    $("#inputPass").attr("disabled", "disabled");
-				    $("#selectRole").val("");
-				    $("#selectRole").attr("disabled", "disabled");
-				    $("#customSwitch3").prop('checked', false);
-				    $("#customSwitch3").attr("disabled", "disabled");
+				    $("#username").val("");
+				    $("#username").attr("disabled", "disabled");
+				    $("#password").val("");
+				    $("#password").attr("disabled", "disabled");
+				    $("#userRol").val("");
+				    $("#userRol").attr("disabled", "disabled");
+				    $("#enabled").prop('checked', false);
+				    $("#enabled").attr("disabled", "disabled");
 				});
 			});
 			

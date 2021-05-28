@@ -11,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue()
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
 	

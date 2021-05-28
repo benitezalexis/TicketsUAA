@@ -15,6 +15,6 @@ public class UserModel {
 	private String username;
 	private boolean enabled;
 	private String password;
-	private UserRol userRol;
+	private String userRol;
 
 }

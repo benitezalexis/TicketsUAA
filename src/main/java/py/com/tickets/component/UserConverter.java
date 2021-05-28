@@ -1,12 +1,11 @@
 package py.com.tickets.component;
 
-import java.util.Set;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import py.com.tickets.entity.User;
-import py.com.tickets.entity.UserRol;
 import py.com.tickets.model.UserModel;
+import py.com.tickets.util.MyUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,6 +13,9 @@ import py.com.tickets.model.UserModel;
  */
 @Component("userConverter")
 public class UserConverter {
+	
+	@Autowired
+	private MyUtil myUtil;
 
 	/**
 	 * nos devolvera una entidad user.
@@ -21,14 +23,12 @@ public class UserConverter {
 	 * @param userModel the user model
 	 * @return the user
 	 */
-	@SuppressWarnings("unchecked")
 	public User convertUserModel2User(UserModel userModel) {
 		User user = new User();
 		//user.setId(userModel.getId());
 		user.setUsername(userModel.getUsername());
-		user.setPassword(userModel.getPassword());
+		user.setPassword(myUtil.encriptarPass(userModel.getPassword()));
 		user.setEnabled(userModel.isEnabled());
-		user.setUserRole((Set<UserRol>) userModel.getUserRol());
 		return user;
 	}
 	
@@ -44,7 +44,6 @@ public class UserConverter {
 		userModel.setUsername(user.getUsername());
 		userModel.setPassword(user.getPassword());
 		userModel.setEnabled(user.isEnabled());
-		userModel.setUserRol((UserRol) user.getUserRole());
 		return userModel;
 	}
 }
