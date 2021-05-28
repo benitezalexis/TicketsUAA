@@ -18,8 +18,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class User {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	//@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid", strategy = "uuid")
 	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
 	

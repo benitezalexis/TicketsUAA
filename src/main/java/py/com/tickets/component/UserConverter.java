@@ -44,6 +44,10 @@ public class UserConverter {
 		userModel.setUsername(user.getUsername());
 		userModel.setPassword(user.getPassword());
 		userModel.setEnabled(user.isEnabled());
+		/*if(user.getUsername().equals(rol.getUser())) {			
+			userModel.setUserRol(rol.getRole());
+		}*/
+		
 		return userModel;
 	}
 }

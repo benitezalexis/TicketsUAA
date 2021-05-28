@@ -47,21 +47,15 @@ public class UserController {
 	 * @return the string
 	 */
 	@PostMapping("/addNewUser")
-	// public String addNewUser(@ModelAttribute(name = "userModel") UserModel
-	// userModel, Model model) {
 	public String addNewUser(UserModel userModel) {
-		LOG.info("--METHOD: addContact() --PARAMS:  " + userModel.toString());
+		LOG.info("--METHOD: addNewUser() --PARAMS:  " + userModel.toString());
 		if (userService.findByUsername(userModel.getUsername()) != null) {
 			return "admin/customers/customerexists";
 		}
 		//Primero se inserta el usuario
 		userService.insert(userConverter.convertUserModel2User(userModel));
-		
 		//Despues se carga el rol
-		UserRol role = new UserRol();
-		role.setUser(userConverter.convertUserModel2User(userModel));
-		role.setRole(userModel.getUserRol());
-		roleService.insert(role);
+		roleService.insert(new UserRol(1, userConverter.convertUserModel2User(userModel), userModel.getUserRol()));
 		
 		return "redirect:/users";
 	}

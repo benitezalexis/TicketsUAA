@@ -1,5 +1,6 @@
 package py.com.tickets.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import py.com.tickets.component.UserConverter;
 import py.com.tickets.entity.Customer;
+import py.com.tickets.entity.UserRol;
+import py.com.tickets.model.UserModel;
+import py.com.tickets.repository.RoleRepository;
 import py.com.tickets.repository.UserRepository;
 import py.com.tickets.service.CustomerService;
 import py.com.tickets.service.UserService;
@@ -30,6 +35,12 @@ public class DashboardController {
 		
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private RoleRepository roleRepo;
+	
+	@Autowired
+	private UserConverter userConver;
 
     @RequestMapping({"/dashboard","/"})
     public String dashboard(){
@@ -40,10 +51,18 @@ public class DashboardController {
     @RequestMapping({"/dashboard/users/","/users"})
     public String users(Model model){
     	List<py.com.tickets.entity.User> user = userRepo.findAll();
-
+    	List<py.com.tickets.entity.UserRol> rol = roleRepo.findAll();
+    	/*List<UserModel> userModel;
+    	
+    	for (int i = 0; i < user.size(); i++) {
+    		userModel = userConver.convertUser2UserModel(user.get(i), null);
+		}*/
+    	
     	model.addAttribute("users", user);
-
+    	model.addAttribute("roles", rol);
+    	
     	model.addAttribute("user", new py.com.tickets.entity.User());
+    	model.addAttribute("rol", new py.com.tickets.entity.UserRol());
         return ViewConstants.USERS;
     }
     
