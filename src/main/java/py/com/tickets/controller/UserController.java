@@ -55,7 +55,7 @@ public class UserController {
 		//Primero se inserta el usuario
 		userService.insert(userConverter.convertUserModel2User(userModel));
 		//Despues se carga el rol
-		roleService.insert(new UserRol(1, userConverter.convertUserModel2User(userModel), userModel.getUserRol()));
+		roleService.insert(new UserRol(userConverter.convertUserModel2User(userModel), userModel.getUserRol()));
 		
 		return "redirect:/users";
 	}

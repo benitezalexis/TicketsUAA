@@ -21,11 +21,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users_roles", uniqueConstraints = @UniqueConstraint(columnNames = { "role", "username" }))
-@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
 public class UserRol {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_role_id", unique= true, nullable = false)
 	private Integer userRoleId;
 	
