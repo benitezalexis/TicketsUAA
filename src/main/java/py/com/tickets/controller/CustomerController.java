@@ -19,9 +19,6 @@ public class CustomerController {
 	 @Autowired
      private CustomerService customerService;
 	
-	
-	 
-	 
 	 @PostMapping({"/addCustomer"})
 	    public String addCustomer(Customer customer){
 		 if(customerService.findCustomer(customer)!=null) {

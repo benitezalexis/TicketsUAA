@@ -8,11 +8,15 @@
  */
 package py.com.tickets.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import py.com.tickets.entity.User;
 import py.com.tickets.entity.UserRol;
 
 @Repository("roleRepository")
 public interface RoleRepository extends GenericRepository<UserRol> {
 
+	public abstract List<UserRol> findByUser(User user);
 }

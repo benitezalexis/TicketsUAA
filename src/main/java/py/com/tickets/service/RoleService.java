@@ -14,5 +14,4 @@ import py.com.tickets.entity.UserRol;
 
 @Service
 public interface RoleService extends GenericService<UserRol> {
-
 }

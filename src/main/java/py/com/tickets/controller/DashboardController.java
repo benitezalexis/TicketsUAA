@@ -1,10 +1,8 @@
 package py.com.tickets.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -15,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import py.com.tickets.component.UserConverter;
 import py.com.tickets.entity.Customer;
-import py.com.tickets.entity.UserRol;
-import py.com.tickets.model.UserModel;
 import py.com.tickets.repository.RoleRepository;
 import py.com.tickets.repository.UserRepository;
 import py.com.tickets.service.CustomerService;
-import py.com.tickets.service.UserService;
 import py.com.tickets.util.ViewConstants;
 
 /**

@@ -56,7 +56,7 @@
 										<tr>
 											<th scope="col">Usuario</th>
 											<th scope="col">Estado</th>
-											<th scope="col">Administrar <button type="button" class="btn btn-primary float-right newUser">Nuevo</button></th>
+											<th scope="col"><button type="button" class="btn btn-primary float-left newUser">Nuevo</button></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -68,8 +68,8 @@
 											</td>
 											<td>
 												<div class="btn-group" role="group" aria-label="Basic example">
-													<a th:href="@{edit/} + ${user.getUsername()}"><button type="button" class="btn btn-primary">Editar</button></a>
-                                  					<a th:href="@{delete/} + ${user.getUsername()}"><button  type="button" class="btn btn-danger">Eliminar</button></a>
+													<a th:href="@{/edit?username=__${user.username}__}"><button type="button" class="btn btn-info editUser"><span class="fas fa-edit"></span></button></a>
+                                  					<a th:href="@{/delete?username=__${user.username}__}"><button  type="button" class="btn btn-danger"><span class="fas fa-trash-alt"></button></a>
 											   </div>
 											</td>
 										</tr>
@@ -102,7 +102,7 @@
 				                <div class="card-body">
 				                  <div class="form-group">
 				                    <label for="username">Usuario</label>
-				                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese el usuario" minlength="3" disabled required >
+				                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese el usuario" minlength="3" disabled required th:field="*{username}" th:value="${username}">
 				                  </div>
 				                  <div class="form-group">
 				                    <label for="password">Contraseña</label>
@@ -110,7 +110,7 @@
 				                  </div>
 				                  <div class="form-group">
 			                        <label>Rol del Usuario</label>
-			                        <select name="userRol" id="userRol" class="form-control" disabled required>
+			                        <select name="userRol" id="userRol" class="form-control" disabled required th:option="*{userRole}">
 			                          <option value="ROLE_GUEST">Invitado</option>
 			                          <option value="ROLE_STAFF">Staff</option>
 			                          <option value="ROLE_SENIOR">Supervisor</option>
@@ -119,7 +119,7 @@
 			                      </div>
 				                  <div class="form-group">
 				                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-				                      <input type="checkbox" class="custom-control-input" name="enabled" id="enabled" disabled>
+				                      <input type="checkbox" class="custom-control-input" name="enabled" id="enabled" disabled th:checked="${enabled}">
 				                      <label class="custom-control-label" for="enabled">Estado de usuario (Habilitado / Deshabilitado)</label>
 				                    </div>
 				                  </div>
@@ -173,11 +173,19 @@
 				    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 				  });
 				
-				$(".newUser").click(() => {
+				function removeAttr(){
 				    $("#username").removeAttr("disabled");
 				    $("#password").removeAttr("disabled");
 				    $("#userRol").removeAttr("disabled");
 				    $("#enabled").removeAttr("disabled");
+				}
+				
+				$(".newUser").click(() => {
+				    removeAttr();
+				});
+				
+				$(".editUser").click(() => {
+				    removeAttr();
 				});
 				
 				$(".btnClean").click(() => {

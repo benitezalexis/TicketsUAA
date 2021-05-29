@@ -2,6 +2,8 @@ package py.com.tickets.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 
 public interface GenericService<T> {
 	
@@ -15,5 +17,6 @@ public interface GenericService<T> {
 
 	void delete(Long id);
 	
+	@Transactional
 	void deleteObj(T obj);
 }
