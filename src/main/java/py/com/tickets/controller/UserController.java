@@ -1,5 +1,7 @@
 package py.com.tickets.controller;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,10 +17,9 @@ import py.com.tickets.component.UserConverter;
 import py.com.tickets.entity.User;
 import py.com.tickets.entity.UserRol;
 import py.com.tickets.model.UserModel;
-import py.com.tickets.repository.RoleRepository;
+import py.com.tickets.repository.UserRepository;
 import py.com.tickets.service.RoleService;
 import py.com.tickets.service.UserService;
-import py.com.tickets.util.ViewConstants;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,7 +41,7 @@ public class UserController {
 	private RoleService roleService;
 	
 	@Autowired
-	private RoleRepository rolRepo;
+	private UserRepository userRepo;
 
 	@Autowired
 	private UserConverter userConverter;
@@ -66,6 +67,16 @@ public class UserController {
 		return "redirect:/users";
 	}
 
+	@GetMapping("/editUser")
+	public String editUser(@RequestParam(name="username", required=true) String username, Model model, @ModelAttribute UserModel userModel) {
+		User user = userService.findByUsername(username);
+		if(user != null) {
+			model.addAttribute("user", user);		
+		}
+		return "admin/users/editUsers";
+		//return "redirect:/users";
+	}
+	
 	@GetMapping("/delete")
 	public String delete(@RequestParam(name="username", required=true) String username) {
 		User user = userService.findByUsername(username);
@@ -79,12 +90,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@GetMapping("/edit")
-	public String editUser(@RequestParam(name="username", required=true) String username, Model model) {
-		User user = userService.findByUsername(username);
-		model.addAttribute("userModel", user);
-		return ViewConstants.USERS;
-	}
+
 
 	@PostMapping({ "/saveEditUser" })
 	public String saveEditUser(User user) {

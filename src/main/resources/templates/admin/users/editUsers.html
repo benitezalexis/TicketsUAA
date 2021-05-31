@@ -99,28 +99,25 @@
 								</div>
 							</div>
 							<!-- /.card-header -->
-							<form th:action="@{/addNewUser}" th:object="${userModel}" method="POST">
+							<form th:action="@{/saveEditUser}" th:object="${user}" method="POST">
 				                <div class="card-body">
 				                  <div class="form-group">
 				                    <label for="username">Usuario</label>
-				                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese el usuario" minlength="3" disabled required>
+				                    <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese el usuario" minlength="3" required th:field="*{username}" >
 				                  </div>
 				                  <div class="form-group">
 				                    <label for="password">Contraseña</label>
-				                    <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese la contraseña" minlength="5" required disabled>
+				                    <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese la contraseña" minlength="5" required >
 				                  </div>
 				                  <div class="form-group">
 			                        <label>Rol del Usuario</label>
-			                        <select name="userRol" id="userRol" class="form-control" disabled required>
-			                          <option value="ROLE_GUEST">Invitado</option>
-			                          <option value="ROLE_STAFF">Staff</option>
-			                          <option value="ROLE_SENIOR">Supervisor</option>
-			                          <option value="ROLE_ADMIN">Administrador</option>
+			                        <select name="userRol" id="userRol" class="form-control" required th:field="*{userRole}" >
+			                         
 			                        </select> 
 			                      </div>
 				                  <div class="form-group">
 				                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-				                      <input type="checkbox" class="custom-control-input" name="enabled" id="enabled" disabled>
+				                      <input type="checkbox" class="custom-control-input" name="enabled" id="enabled" th:checked="*{enabled}" >
 				                      <label class="custom-control-label" for="enabled">Estado de usuario (Habilitado / Deshabilitado)</label>
 				                    </div>
 				                  </div>
